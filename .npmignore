@@ -1,0 +1,23 @@
+# Git files
+.git/
+.gitignore
+
+# Config files (except example)
+mcp.toml
+config/
+
+# Development files
+.serena/
+*.log
+.DS_Store
+
+# Test files
+test/
+coverage/
+.nyc_output/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
