@@ -1,0 +1,34 @@
+{
+  "name": "wildduck-mcp-plugin",
+  "version": "1.0.0",
+  "description": "Model Context Protocol (MCP) server plugin for WildDuck email server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wildduck",
+    "plugin",
+    "mcp",
+    "model-context-protocol",
+    "email",
+    "imap"
+  ],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "wildduck": "*"
+  },
+  "dependencies": {
+    "mongodb": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "index.js",
+    "lib/",
+    "mcp.toml",
+    "README.md"
+  ]
+}

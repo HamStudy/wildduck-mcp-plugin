@@ -1,0 +1,18 @@
+# WildDuck MCP Plugin Configuration
+# Place this file as config/plugins/mcp.toml in your WildDuck installation
+
+[mcp]
+# Enable or disable the plugin
+enabled = true
+
+# Secret key for generating secure attachment URLs
+# IMPORTANT: Change this to a random, secure value in production!
+# You can generate one with: openssl rand -base64 32
+attachmentSecret = "change-this-to-a-secure-random-string"
+
+# Read-only mode - disables all write operations
+# When enabled, only reading tools are available:
+# - listMailboxes, getMessages, getMessage, searchMessages, getAttachment
+# Disabled tools in read-only mode:
+# - sendEmail, moveMessage, deleteMessage, createMailbox, markAsRead, markAsFlag
+readOnly = false
