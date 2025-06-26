@@ -92,6 +92,8 @@ module.exports.init = (app, done) => {
             try {
                 await authenticateRequest(req);
                 
+                // Don't set content-type here - let the MCP transport handle it
+                
                 // the MCP transport often tries to call something like res.writeHead(500).end() but
                 // restify doesn't allow that, so we wrap it ot make it work
                 const oldWriteHead = res.writeHead;
@@ -100,6 +102,27 @@ module.exports.init = (app, done) => {
                     oldWriteHead.apply(res, args);
                     return res;
                 };
+                
+                // Also wrap setHeader to ensure headers are set properly
+                const oldSetHeader = res.setHeader;
+                res.setHeader = (name, value) => {
+                    logger.verbose('MCP-PLUGIN', 'Setting header %s=%s', name, value);
+                    if (oldSetHeader) {
+                        oldSetHeader.call(res, name, value);
+                    } else if (res.header) {
+                        // Restify uses res.header() instead of res.setHeader()
+                        res.header(name, value);
+                    }
+                    return res;
+                };
+                
+                // Ensure getHeader method exists (MCP SDK might need it)
+                if (!res.getHeader) {
+                    res.getHeader = (name) => {
+                        const headers = res.getHeaders ? res.getHeaders() : res.headers || {};
+                        return headers[name.toLowerCase()];
+                    };
+                }
 
                 // The MCP transport needs full control over the response
                 await mcpServer.handleRequest(req, res, next);
